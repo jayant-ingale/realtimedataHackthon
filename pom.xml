@@ -1,0 +1,184 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.syntelinc</groupId>
+  <artifactId>samplevertxrealtime</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  
+  	<properties>
+  		<java-version>1.8</java-version>
+		<vertx.version>3.8.0</vertx.version>
+		<fabric8.vertx.plugin.version>0.1-SNAPSHOT</fabric8.vertx.plugin.version>
+		<vmp.version>1.0.13</vmp.version>
+		<slf4jVersion>1.6.1</slf4jVersion>
+		<!-- Hello World  -->
+		<!--  <vertx.verticle>com.syntel.vertx.MyFirstVerticle</vertx.verticle>  -->
+		 <!-- Websocket  -->
+		 <vertx.verticle>com.syntel.vertx.StarterController</vertx.verticle> 
+		<!--   <vertx.verticle>com.syntel.vertx.AsyncsVerticle</vertx.verticle> -->
+		 <!-- <lombok.version>1.16.20</lombok.version> -->
+		 <maven.test.skip>true</maven.test.skip>
+		 <vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
+	</properties>
+	
+	<dependencies>
+	<dependency>
+ <groupId>io.vertx</groupId>
+ <artifactId>vertx-maven-service-factory</artifactId>
+</dependency>
+	<dependency>
+	    <groupId>io.vertx</groupId>
+	    <artifactId>vertx-core</artifactId>
+	</dependency>
+	<dependency>
+	<groupId>io.vertx</groupId>
+	<artifactId>vertx-web</artifactId>
+	</dependency>
+	 <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-rx-java</artifactId>
+     </dependency>
+	<dependency>
+	    <groupId>io.vertx</groupId>
+	    <artifactId>vertx-unit</artifactId>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	  <groupId>junit</groupId>
+	  <artifactId>junit</artifactId>
+	  <version>4.12</version>
+	  <scope>test</scope>
+	</dependency>
+	 <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.2</version> 
+    </dependency>
+       <!-- <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency> -->
+        
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4jVersion}</version>
+		</dependency>
+	</dependencies>
+	
+	  <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-dependencies</artifactId>
+                <version>${vertx.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+	
+	
+	<build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <!-- <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-shade-plugin</artifactId>
+  <version>2.3</version>
+  <executions>
+    <execution>
+      <phase>package</phase>
+      <goals>
+        <goal>shade</goal>
+      </goals>
+      <configuration>
+        <transformers>
+          <transformer
+            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+            <manifestEntries>
+              <Main-Class>io.vertx.core.Starter</Main-Class>
+              <Main-Verticle>com.syntel.controller.MyFirstVerticle</Main-Verticle>
+            </manifestEntries>
+          </transformer>
+        </transformers>
+        <artifactSet/>
+        <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar</outputFile>
+      </configuration>
+    </execution>
+  </executions>
+	</plugin> -->
+	 <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4</version>
+     </plugin>
+     <plugin>
+    <groupId>org.eclipse.m2e</groupId>
+    <artifactId>lifecycle-mapping</artifactId>
+    <version>1.0.0</version>
+    <configuration>
+    <lifecycleMappingMetadata>
+        <pluginExecutions>
+        <pluginExecution>
+            <pluginExecutionFilter>
+            <groupId>io.fabric8</groupId>
+            <artifactId>vertx-maven-plugin</artifactId>
+            <versionRange>[1.0.4,)</versionRange>
+            <goals>
+                <goal>initialize</goal>
+            </goals>
+            </pluginExecutionFilter>
+            <action>
+            <ignore />
+            </action>
+        </pluginExecution>
+        </pluginExecutions>
+    </lifecycleMappingMetadata>
+    </configuration>
+   </plugin>
+         <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>appengine-maven-plugin</artifactId>
+        <version>2.0.0</version>
+        <configuration>
+          <version>1</version>
+        </configuration>
+      </plugin>
+	
+			
+	 <!-- <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>vertx-maven-plugin</artifactId>
+        <version>${vertx-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>vmp</id>
+            <goals>
+              <goal>initialize</goal>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <redeploy>true</redeploy>
+        </configuration>
+      </plugin> -->
+    </plugins>
+  </build>
+  
+	
+</project>
